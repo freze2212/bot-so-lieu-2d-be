@@ -16,6 +16,7 @@ export interface Report {
   date: string; // YYYY-MM-DD or DD/MM/YYYY
   registeredCount: number;
   firstDepositCount: number;
+  depositorsCount?: number;
   totalDeposit: number;
   totalBet: number;
   createdAt: string;
@@ -169,6 +170,7 @@ export class DatabaseService implements OnModuleInit {
     date: string;
     registeredCount: number;
     firstDepositCount: number;
+    depositorsCount?: number;
     totalDeposit: number;
     totalBet: number;
   }): Report {
@@ -180,6 +182,7 @@ export class DatabaseService implements OnModuleInit {
       date: reportData.date,
       registeredCount: Number(reportData.registeredCount) || 0,
       firstDepositCount: Number(reportData.firstDepositCount) || 0,
+      depositorsCount: Number(reportData.depositorsCount) || 0,
       totalDeposit: Number(reportData.totalDeposit) || 0,
       totalBet: Number(reportData.totalBet) || 0,
       createdAt: new Date().toISOString()

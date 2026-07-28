@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import { ReportsService, CreateReportDto } from './reports.service';
 
 @Controller('reports')
@@ -16,7 +16,8 @@ export class ReportsController {
   }
 
   @Get('stats')
-  getStats() {
-    return this.reportsService.getStats();
+  getStats(@Query('employeeCode') employeeCode?: string) {
+    return this.reportsService.getStats(employeeCode);
   }
 }
+
