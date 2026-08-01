@@ -34,14 +34,14 @@ export class DatabaseService implements OnModuleInit {
   private data: DbSchema = {
     admin: { username: 'admin', passwordHash: 'admin123' },
     employees: [
-      { id: '1', name: 'GHE BIFRONS', code: 'GG88F4D04', createdAt: new Date().toISOString() },
+      { id: '1', name: 'GHE BIFRONS', code: 'GG88F004', createdAt: new Date().toISOString() },
       { id: '2', name: 'NGUYEN VAN A', code: 'NVA001', createdAt: new Date().toISOString() },
       { id: '3', name: 'TRAN THI B', code: 'TTB002', createdAt: new Date().toISOString() }
     ],
     reports: [
       {
         id: 'rep-1',
-        employeeCode: 'GG88F4D04',
+        employeeCode: 'GG88F004',
         employeeName: 'GHE BIFRONS',
         date: '2026-07-24',
         registeredCount: 15,
@@ -63,7 +63,7 @@ export class DatabaseService implements OnModuleInit {
       },
       {
         id: 'rep-3',
-        employeeCode: 'GG88F4D04',
+        employeeCode: 'GG88F004',
         employeeName: 'GHE BIFRONS',
         date: '2026-07-25',
         registeredCount: 18,
