@@ -174,18 +174,40 @@ export class DatabaseService implements OnModuleInit {
     totalDeposit: number;
     totalBet: number;
   }): Report {
+    const empCode = reportData.employeeCode.toUpperCase();
     const emp = this.getEmployeeByCode(reportData.employeeCode);
+    const empName = emp ? emp.name : 'Unknown';
+
+    // Check if report already exists for this employee and date
+    const existingIndex = this.data.reports.findIndex(
+      (r) => r.employeeCode.toUpperCase() === empCode && r.date === reportData.date,
+    );
+
+    if (existingIndex >= 0) {
+      // Update existing report for that employee & date
+      const existing = this.data.reports[existingIndex];
+      existing.employeeName = empName;
+      existing.registeredCount = Number(reportData.registeredCount) || 0;
+      existing.firstDepositCount = Number(reportData.firstDepositCount) || 0;
+      existing.depositorsCount = Number(reportData.depositorsCount) || 0;
+      existing.totalDeposit = Number(reportData.totalDeposit) || 0;
+      existing.totalBet = Number(reportData.totalBet) || 0;
+      existing.createdAt = new Date().toISOString();
+      this.save();
+      return existing;
+    }
+
     const newReport: Report = {
       id: `rep-${Date.now()}`,
-      employeeCode: reportData.employeeCode.toUpperCase(),
-      employeeName: emp ? emp.name : 'Unknown',
+      employeeCode: empCode,
+      employeeName: empName,
       date: reportData.date,
       registeredCount: Number(reportData.registeredCount) || 0,
       firstDepositCount: Number(reportData.firstDepositCount) || 0,
       depositorsCount: Number(reportData.depositorsCount) || 0,
       totalDeposit: Number(reportData.totalDeposit) || 0,
       totalBet: Number(reportData.totalBet) || 0,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
     this.data.reports.push(newReport);
     this.save();

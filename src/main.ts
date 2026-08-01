@@ -35,7 +35,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
-  const PORT = process.env.PORT || 6030;
+  const PORT = process.env.PORT || 3001;
   await app.listen(PORT);
   console.log(`🚀 NestJS Backend server is running on: http://localhost:${PORT}/api`);
 }

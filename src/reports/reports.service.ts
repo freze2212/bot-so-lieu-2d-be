@@ -40,12 +40,31 @@ export class ReportsService {
     });
   }
 
+  private getDeduplicatedReports(): Report[] {
+    const rawReports = this.db.getReports();
+    // Sort by createdAt ascending so later reports overwrite earlier ones for the same employee + date
+    const sorted = [...rawReports].sort(
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    );
+
+    const latestMap = new Map<string, Report>();
+    for (const r of sorted) {
+      if (!r.employeeCode || !r.date) continue;
+      const key = `${r.employeeCode.trim().toUpperCase()}_${r.date}`;
+      latestMap.set(key, r);
+    }
+
+    return Array.from(latestMap.values());
+  }
+
   getAllReports(): Report[] {
-    return this.db.getReports().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return this.getDeduplicatedReports().sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
   }
 
   getStats(employeeCode?: string) {
-    let reports = this.db.getReports();
+    let reports = this.getDeduplicatedReports();
     let filterCode = '';
 
     if (employeeCode && employeeCode.trim() !== '') {
