@@ -21,8 +21,8 @@ export class TelegramController {
   }
 
   @Post('send-unreported-now')
-  sendUnreportedNow(@Body() body: { botToken?: string; chatId?: string; feUrl?: string; messageText?: string }) {
-    return this.telegramService.sendUnreportedReminder(body.botToken, body.chatId, body.feUrl, body.messageText);
+  sendUnreportedNow(@Body() body: { botToken?: string; chatId?: string; feUrl?: string; unreportedMessageText?: string }) {
+    return this.telegramService.sendUnreportedReminder(body.botToken, body.chatId, body.feUrl, body.unreportedMessageText);
   }
 
   @Get('unreported-status')
